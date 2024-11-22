@@ -1,6 +1,12 @@
 import express from 'express';
 import multer from 'multer';
-import { listarPosts, postarNovoPost, uploadImagem } from '../controllers/postsController.js';
+import cors from 'cors';
+import { listarPosts, postarNovoPost, uploadImagem, editarPost } from '../controllers/postsController.js';
+
+const corsOptions = {
+    origin: "http://localhost:8000",
+    optionsSuccessStatus: 200
+}
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -16,11 +22,15 @@ const upload = multer({dest: "./uploads", storage});
 const routes = (app) => {
     app.use(express.json()); // Habilita o middleware para analisar corpos de requisições em formato JSON
 
+    app.use(cors(corsOptions));
+
     app.get("/posts", listarPosts);
 
     app.post("/posts", postarNovoPost);
 
     app.post("/upload", upload.single("imagem"), uploadImagem);
+
+    app.put("/upload/:id", editarPost);
 }
 
 export default routes;
