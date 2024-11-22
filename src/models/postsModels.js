@@ -8,3 +8,9 @@ export async function getTodosPosts() { // Função assíncrona para obter todos
     const colecao = db.collection("posts"); // Obtém a coleção "posts" do banco de dados
     return colecao.find().toArray(); // Executa uma consulta para encontrar todos os documentos na coleção e retorna os resultados como um array
 }
+
+export async function criarPost(novoPost){
+    const db = conexao.db("imersao-instalike"); // Obtém o banco de dados "imersao-instalike" da conexão
+    const colecao = db.collection("posts"); // Obtém a coleção "posts" do banco de dados
+    return colecao.insertOne(novoPost); // Executa uma consulta para encontrar todos os documentos na coleção e retorna os resultados como um array
+}
